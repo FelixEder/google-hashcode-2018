@@ -1,19 +1,40 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
 	static int R, C, F, N, B, T;
+	static int time;
 	static ArrayList<Car> cars;
 	static LinkedList<Ride> rides;
 
 	public static void main(String[] args) throws FileNotFoundException {
 		input();
-		for(int t = 0; t < T; t++){
+		for(time = 0; time < T; time++){
 			for(int i = 0; i < cars.size(); i++){
-				for(int j = 0; j < rides.size(); j++){
-					if()
+				Car c = cars.get(i);
+				if(c.isAvailable()){
+					int maxPoints = 0;
+					Ride bestRide = null;
+					for(int j = 0; j < rides.size(); j++){
+						Ride r = rides.get(j);
+						int distance = Math.abs(r.getStartColumn() - c.getX()) + Math.abs(r.getStartRow() - c.getY());
+						if(r.getEarliestStart() - time <= distance){
+							int points = B + distance;
+							if(points > maxPoints){
+								maxPoints = points;
+								bestRide = r;
+							}
+						}
+					}
+					if(bestRide != null){
+						c.assignRide(bestRide);
+						rides.remove(bestRide);
+					}
+				}else{
+					c.drive();
 				}
 			}
 		}
@@ -36,12 +57,13 @@ public class Main {
 
 	public static void output() {
 		for(int i = 0; i < F; i++){
-			Car c = c.get(i);
-			ArrayList<Ride> ridesDriven = c.ridesDriven();
+			Car c = cars.get(i);
+			ArrayList<Ride> ridesDriven = c.getRidesDriven();
 			int size = ridesDriven.size();
 			System.out.print(size);
 			for(int j = 0; j < ridesDriven.size(); j++){
-				System.out.print(" " + ridesDriven.getRideID());
+				Ride r = ridesDriven.get(j);
+				System.out.print(" " + r.getRideID());
 			}
 			System.out.println();
 		}
