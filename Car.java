@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Car {
   private int x, y, distance;
