@@ -11,6 +11,8 @@ public class Main {
 	static LinkedList<Ride> rides;
 
 	public static void main(String[] args) throws FileNotFoundException {
+		cars = new ArrayList<Car>();
+		rides = new LinkedList<Ride>();
 		input();
 		for(time = 0; time < T; time++){
 			for(int i = 0; i < cars.size(); i++){
@@ -33,9 +35,10 @@ public class Main {
 						c.assignRide(bestRide);
 						rides.remove(bestRide);
 					}
-				}else{
-					c.drive();
 				}
+
+				if(!c.isAvailable())
+					c.drive();
 			}
 		}
 		output();
@@ -43,6 +46,7 @@ public class Main {
 
 	public static void input() throws FileNotFoundException{
 		Scanner sc = new Scanner(System.in);
+		R = sc.nextInt();
 		C = sc.nextInt();
 		F = sc.nextInt();
 		N = sc.nextInt();
@@ -52,6 +56,10 @@ public class Main {
 		rides = new LinkedList<Ride>();
 		for(int i = 0; i < N; i++){
 			rides.add(new Ride(i, sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt()));
+		}
+
+		for(int i = 0; i < F; i++){
+			cars.add(new Car(0, 0));
 		}
 	}
 
