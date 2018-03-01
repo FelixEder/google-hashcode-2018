@@ -39,23 +39,23 @@ public class Car {
   public boolean isAvailable(){
     return (currentRide == null);
   }
-  public void drive(){
+  public void drive(int average){
     if(pickedUp) {
-      distanceToEnd--;
-      if (distanceToEnd == 0) {
+      distanceToEnd-=average;
+      if (distanceToEnd <= 0) {
         ridesDriven.add(currentRide);
         x = currentRide.getFinishRow();
         y = currentRide.getFinishColumn();
         currentRide = null;
       }
     } else {
-      if(distanceToStart == 0) {
+      if(distanceToStart <= 0) {
         if(Main.time >= currentRide.getEarliestStart()) {
           pickedUp = true;
-          drive();
+          drive(average);
         }
       } else {
-        distanceToStart--;
+        distanceToStart-=average;
       }
     }
   }

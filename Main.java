@@ -9,12 +9,14 @@ public class Main {
 	static int time;
 	static ArrayList<Car> cars;
 	static LinkedList<Ride> rides;
+	static int average = 0;
+
 
 	public static void main(String[] args) throws FileNotFoundException {
 		cars = new ArrayList<Car>();
 		rides = new LinkedList<Ride>();
 		input();
-		for(time = 0; time < T; time++){
+		for(time = 0; time < T; time+=average){
 			for(int i = 0; i < cars.size(); i++){
 				Car c = cars.get(i);
 				if(c.isAvailable()){
@@ -38,7 +40,7 @@ public class Main {
 				}
 
 				if(!c.isAvailable())
-					c.drive();
+					c.drive(average);
 			}
 		}
 		output();
@@ -53,15 +55,23 @@ public class Main {
 		B = sc.nextInt();
 		T = sc.nextInt();
 
+		int sum = 0;
 		rides = new LinkedList<Ride>();
 		for(int i = 0; i < N; i++){
-			rides.add(new Ride(i, sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt()));
+			Ride r = new Ride(i, sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt());
+			rides.add(r);
+			sum += r.getDistance();
+
 		}
 
 		for(int i = 0; i < F; i++){
 			cars.add(new Car(0, 0));
 		}
+
+		average = sum/rides.size();
+		System.out.println("average: " + average);
 	}
+
 
 	public static void output() {
 		for(int i = 0; i < F; i++){
