@@ -69,7 +69,7 @@ public class Main {
 		}
 
 		average = sum/rides.size();
-		System.out.println("average: " + average);
+		//System.out.println("average: " + average);
 	}
 
 
